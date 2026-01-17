@@ -54,6 +54,13 @@ sudo ./pimpmykali.sh
 # Writeups / Honorable Mentions
   - ip3c4c_n00b https://ip3c4c.com/2202_homelab_vmware/
 
+# Revision 2.0.6 - Range Selection & Recon Tools
+  - Added PDTM (ProjectDiscovery Tool Manager) installation (Menu option W)
+  - Added support for range and comma-separated menu selections (e.g., "1-3,5,A")
+  - Added additional recon tools to Fix Missing (Menu option 1):
+    - Feroxbuster, Hakrawler, GAU, Anew, Unfurl, Nuclei, Subfinder, Httpx, Katana, Dalfox
+  - Added Rustscan installation (--rustscan)
+
 # Revision 2.0.5 - MAPT Course Update
   - resolved issue with wkhtmltox installation
 
@@ -275,8 +282,18 @@ sudo ./pimpmykali.sh
     - docker-compose from github
     - enumforlinxu
     - enumforlinux-ng
+    - feroxbuster
     - flameshot installed
     - ffuf
+    - gau (GetAllUrls)
+    - hakrawler
+    - anew
+    - unfurl
+    - nuclei
+    - subfinder
+    - httpx
+    - katana
+    - dalfox
     - gedit installed
       - gedit display fix applied
     - ghidra
@@ -493,6 +510,11 @@ sudo ./pimpmykali.sh
   - Install MS VSCode
   - command line switch: --vscode
 
+- Menu Option W
+  - Install PDTM (ProjectDiscovery Tool Manager)
+  - Installs pdtm via go install
+  - command line switch: --pdtm
+
 - Menu Option X
   - exit pimpmykali.sh menu
 
@@ -601,6 +623,8 @@ sudo ./pimpmykali.sh
       - get all the peas from github (linpeas/winpeas)
       - linpeas to /opt/linpeas
       - winpeas to /opt/winpeas
+    - --pdtm
+      - install ProjectDiscovery Tool Manager
     - --plumhound  
       - install plumhound
       - adds symlinks in /usr/local/bin to put plumhound in $PATH
@@ -608,6 +632,8 @@ sudo ./pimpmykali.sh
       - set speedrun var
       - enable root login
       - only prompt is to set root account password
+    - --rustscan
+      - install rustscan
     - --smbconf
       - run fix smb.conf 
     - --seclists

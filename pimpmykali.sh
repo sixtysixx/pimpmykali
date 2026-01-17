@@ -292,6 +292,17 @@ fix_missing() {
     fix_netexec
     fix_ssh_widecompat
     fix_waybackurls
+    install_pdtm
+    install_feroxbuster
+    install_hakrawler
+    install_gau
+    install_anew
+    install_unfurl
+    install_nuclei
+    install_subfinder
+    install_httpx
+    install_katana
+    install_dalfox
     fix_dockercompose
     fix_ghidra
     fix_locate
@@ -584,6 +595,236 @@ fix_waybackurls() {
       else 
         echo -e "${spaces}${greenplus} /usr/bin/waybackrust not found" 
     fi 
+    }
+
+
+install_pdtm() {
+    echo -e "\n  ${greenplus} Installing PDTM (ProjectDiscovery Tool Manager)"
+    if command -v pdtm &> /dev/null; then
+        echo -e "${spaces}${greenminus} pdtm is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install pdtm"
+        echo -e "${spaces}${greenplus} Installing pdtm..."
+        go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+        
+        if command -v pdtm &> /dev/null; then
+             echo -e "${spaces}${greenplus} $(pdtm --version) installed"
+        else
+             echo -e "${spaces}${redexclaim} pdtm installation failed"
+        fi
+    fi
+    }
+
+
+install_feroxbuster() {
+    is_installed "feroxbuster"
+    }
+
+
+install_hakrawler() {
+    echo -e "\n  ${greenplus} Installing hakrawler"
+    if command -v hakrawler &> /dev/null; then
+        echo -e "${spaces}${greenminus} hakrawler is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install hakrawler"
+        echo -e "${spaces}${greenplus} Installing hakrawler..."
+        go install github.com/hakluke/hakrawler@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_gau() {
+    echo -e "\n  ${greenplus} Installing gau (GetAllUrls)"
+    if command -v gau &> /dev/null; then
+        echo -e "${spaces}${greenminus} gau is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install gau"
+        echo -e "${spaces}${greenplus} Installing gau..."
+        go install github.com/lc/gau/v2/cmd/gau@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_anew() {
+    echo -e "\n  ${greenplus} Installing anew"
+    if command -v anew &> /dev/null; then
+        echo -e "${spaces}${greenminus} anew is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install anew"
+        echo -e "${spaces}${greenplus} Installing anew..."
+        go install github.com/tomnomnom/anew@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_unfurl() {
+    echo -e "\n  ${greenplus} Installing unfurl"
+    if command -v unfurl &> /dev/null; then
+        echo -e "${spaces}${greenminus} unfurl is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install unfurl"
+        echo -e "${spaces}${greenplus} Installing unfurl..."
+        go install github.com/tomnomnom/unfurl@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_nuclei() {
+    echo -e "\n  ${greenplus} Installing nuclei"
+    if command -v nuclei &> /dev/null; then
+        echo -e "${spaces}${greenminus} nuclei is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install nuclei"
+        echo -e "${spaces}${greenplus} Installing nuclei..."
+        go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_subfinder() {
+    echo -e "\n  ${greenplus} Installing subfinder"
+    if command -v subfinder &> /dev/null; then
+        echo -e "${spaces}${greenminus} subfinder is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install subfinder"
+        echo -e "${spaces}${greenplus} Installing subfinder..."
+        go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_httpx() {
+    echo -e "\n  ${greenplus} Installing httpx"
+    if command -v httpx &> /dev/null; then
+        echo -e "${spaces}${greenminus} httpx is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install httpx"
+        echo -e "${spaces}${greenplus} Installing httpx..."
+        go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_katana() {
+    echo -e "\n  ${greenplus} Installing katana"
+    if command -v katana &> /dev/null; then
+        echo -e "${spaces}${greenminus} katana is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install katana"
+        echo -e "${spaces}${greenplus} Installing katana..."
+        go install github.com/projectdiscovery/katana/cmd/katana@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_rustscan() {
+    echo -e "\n  ${greenplus} Installing rustscan"
+    if command -v rustscan &> /dev/null; then
+        echo -e "${spaces}${greenminus} rustscan is already installed"
+    else
+        # Try apt first if available in newer kali versions
+        if apt-cache show rustscan > /dev/null 2>&1; then
+            is_installed "rustscan"
+        else
+            APP="wget"
+            FUNCTYPE="download rustscan"
+            echo -e "${spaces}${greenplus} Downloading rustscan .deb..."
+            # Note: Hardcoding a version might be risky if it gets too old, but using latest release URL logic is better
+            # For simplicity, using a known good release pattern or the latest release logic
+            RUSTSCAN_URL="https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb"
+            if [[ "$arch" == "arm64" ]]; then
+                 echo -e "${spaces}${redexclaim} Automated rustscan install for arm64 not implemented via deb, try cargo"
+                 install_rustup
+                 cargo install rustscan
+            else
+                wget -q "$RUSTSCAN_URL" -O /tmp/rustscan.deb
+                EXIT_STATUS="$?"
+                check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+                
+                APP="dpkg"
+                FUNCTYPE="install rustscan"
+                dpkg -i /tmp/rustscan.deb
+                EXIT_STATUS="$?"
+                check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+                rm -f /tmp/rustscan.deb
+            fi
+        fi
+    fi
+    }
+
+
+install_dalfox() {
+    echo -e "\n  ${greenplus} Installing dalfox"
+    if command -v dalfox &> /dev/null; then
+        echo -e "${spaces}${greenminus} dalfox is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install dalfox"
+        echo -e "${spaces}${greenplus} Installing dalfox..."
+        go install github.com/hahwul/dalfox/v2@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+    fi
+    }
+
+
+install_gf() {
+    echo -e "\n  ${greenplus} Installing gf"
+    if command -v gf &> /dev/null; then
+        echo -e "${spaces}${greenminus} gf is already installed"
+    else
+        install_golang
+        APP="go"
+        FUNCTYPE="install gf"
+        echo -e "${spaces}${greenplus} Installing gf..."
+        go install github.com/tomnomnom/gf@latest
+        EXIT_STATUS="$?"
+        check_exit_status ${APP} ${FUNCTYPE} ${EXIT_STATUS}
+        
+        echo -e "${spaces}${greenplus} Setting up gf patterns..."
+        mkdir -p ~/.gf
+        git clone https://github.com/tomnomnom/gf-patterns /tmp/gf-patterns
+        cp /tmp/gf-patterns/*.json ~/.gf
+        rm -rf /tmp/gf-patterns
+        echo -e "${spaces}${greenplus} gf patterns installed to ~/.gf"
+    fi
     }
 
 
@@ -2671,20 +2912,84 @@ p1lEC0auURW3owsQlTZtf4QtGZgjXYKT4inPtI23oEK7wXlyPnd8arKdKE0EPdUnhIf0v+iE2o
 7BgVFVyec3u1OxFw+uRxbvPt8R6+MOpGq5cBAAA="  | gunzip )
 
 
+parse_menu_input() {
+    input_string="$1"
+    # Remove spaces
+    input_string="${input_string// /}"
+    
+    parsed_selections=()
+    
+    # Split by comma
+    IFS=',' read -ra parts <<< "$input_string"
+    
+    for part in "${parts[@]}"; do
+        if [[ "$part" =~ - ]]; then
+            # Handle range
+            start="${part%-*}"
+            end="${part#*-}"
+            
+            # Check if numeric range
+            if [[ "$start" =~ ^[0-9]+$ ]] && [[ "$end" =~ ^[0-9]+$ ]]; then
+                if [ "$start" -le "$end" ]; then
+                    for ((i=start; i<=end; i++)); do
+                        parsed_selections+=("$i")
+                    done
+                else
+                     parsed_selections+=("$start" "$end") # Fallback
+                fi
+            # Check if alphabetic range (single letters)
+            elif [[ "${#start}" -eq 1 ]] && [[ "${#end}" -eq 1 ]]; then
+                start_ascii=$(printf "%d" "'$start")
+                end_ascii=$(printf "%d" "'$end")
+                if [ "$start_ascii" -le "$end_ascii" ]; then
+                    for ((i=start_ascii; i<=end_ascii; i++)); do
+                        char=$(printf "\\$(printf "%03o" "$i")")
+                        parsed_selections+=("$char")
+                    done
+                else
+                    parsed_selections+=("$start" "$end")
+                fi
+            else
+                parsed_selections+=("$part")
+            fi
+        else
+            parsed_selections+=("$part")
+        fi
+    done
+    
+    echo "${parsed_selections[@]}"
+    }
+
+validate_menu_selection() {
+    selection="$1"
+    case "$selection" in
+        [0-9]|"="|[tTkKaAbBeEoOyYzZuUpPsSvVwW!@$%^]) return 0 ;;
+        *) return 1 ;;
+    esac
+    }
+
 confirm_menu_choice() {
+    local choice="$1"
+    local is_batch="$2"
+    
     # menu selection confirmation
-    if [ "${menuinput}" = "x" ] || [ "${menuinput}" == "X" ]
-    then
+    if [ "${choice}" = "x" ] || [ "${choice}" == "X" ]; then
       exit_screen
     else
-      menuinput_to_upper=$(echo ${menuinput} | tr '[:lower:]' '[:upper:]')
+      menuinput_to_upper=$(echo ${choice} | tr '[:lower:]' '[:upper:]')
+      
+      if [[ "$is_batch" == "true" ]]; then
+          echo -e "\n  ${greenplus} Processing batch selection: ${menuinput_to_upper}"
+          return 0
+      fi
+
       echo -e "\n"
       read -n1 -p "  Menu selection is ${menuinput_to_upper} press Y or N to confirm: " selectinput
 
       case $selectinput in
-        "Y"|"y") echo -e "\n\n  ${greenplus} Executing menu option ${menuinpu_to_upper}";;
+        "Y"|"y") echo -e "\n\n  ${greenplus} Executing menu option ${menuinput_to_upper}";;
         "N"|"n") echo -e "\n\n  ${greenminus} Restarting menu"; return 1;;
-              *) echo -e "\n${spaces}${redexclaim} Invalid input, Y, y, N or n only"; confirm_menu_choice $menuinput;;
+              *) echo -e "\n${spaces}${redexclaim} Invalid input, Y, y, N or n only"; confirm_menu_choice "$choice";;
       esac
     fi
     }
@@ -2725,20 +3030,51 @@ pimpmykali_menu() {
       echo -e "  P - Download Lin/WinPeas          (adds linpeas to /opt/linpeas and winpeas to /opt/winpeas)"   # fix_linwinpeas
       echo -e "  S - Fix Signing Key               (fix kali signing key)"                                       # new_kali_signingkey
       echo -e "  V - Install MS-VSCode             (install microsoft vscode only)"                              # install_vscode
+      echo -e "  W - Install PDTM                  (ProjectDiscovery Tool Manager)"                              # install_pdtm
       echo -e "  ! - Nuke Impacket                 (install Impacket 0.9.19)"                                    # fix_sead_warning
       echo -e "  @ - Install Nessus                (install Nessus and start nessusd service)"                   # install_nessus
       echo -e "  $ - Nuke Nessus                   (stop nessusd service and remove nessus)"                     # remove_nessus
       echo -e "  % - CrackMapExec                  (install crackmapexec)\n"                                     # fix_cme
       echo -e "  Please use sudo ./pimpmykali.sh --help for additional installations/fixes\n"
       # menu selection
-      read -n1 -p "  Press key for menu item selection or press X to exit: " menuinput
+      read -p "  Enter menu selection (single, comma-separated, or range like 1-3) or X to exit: " raw_input
 
-      # menu selection confirmation
-      confirm_menu_choice $menuinput
-      if [ $? -eq 0 ]; 
-        then
-          break
+      # Parse input
+      selections=($(parse_menu_input "$raw_input"))
+      
+      # Check if empty
+      if [ ${#selections[@]} -eq 0 ]; then continue; fi
+      
+      # Validate
+      valid=true
+      for sel in "${selections[@]}"; do
+          validate_menu_selection "$sel"
+          if [ $? -ne 0 ]; then
+             if [[ "$sel" == "x" ]] || [[ "$sel" == "X" ]]; then
+                 exit_screen
+             fi
+             echo -e "\n  ${redexclaim} Invalid selection: $sel"
+             valid=false
+          fi
+      done
+      
+      if [ "$valid" = false ]; then
+          read -n1 -p "  Press any key to try again..."
+          continue
       fi
+      
+      # Batch confirmation
+      if [ ${#selections[@]} -gt 1 ]; then
+          echo -e "\n  ${greenplus} Batch selection detected: ${selections[*]}"
+          read -n1 -p "  Press Y to confirm batch execution or N to re-select: " batch_confirm
+          if [[ ! "$batch_confirm" =~ ^[Yy]$ ]]; then continue; fi
+      else
+          # Single confirmation
+          confirm_menu_choice "${selections[0]}" "false"
+          if [ $? -ne 0 ]; then continue; fi
+      fi
+      
+      break
     done 
 
     new_kali_signingkey
@@ -2749,51 +3085,54 @@ pimpmykali_menu() {
         export APT_UPDATE_RAN=1
     fi 
 
-    case $menuinput in
-        1) SPEEDRUN=0; ENABLE_ROOT=0; fix_missing;;
-        2) fix_smbconf;;
-        3) install_golang; fix_go_path;;
-        4) fix_grub;;
-        5) fix_impacket;;
-        6) SPEEDRUN=0; ENABLE_ROOT=1; make_rootgreatagain;;
-        7) fix_dockercompose;;
-        8) fix_nmap;;
-        9) fix_libwacom; only_upgrade;;
-        0) SPEEDRUN=0; ENABLE_ROOT=0; fix_all;;
-      a|A) mapt_prereq;;
-      b|B) pbb_lab_setup;;
-#      c|C) ;;
-#      d|D) ;;
-      e|E) fix_libwacom; peh_weblab_setup;;
-#      f|F) ;;
-#      g|G) ;;
-#      h|H) ;;
-#      i|I) ;;
-#      j|J) ;;
-      k|K) fix_keyboard; echo -e "\n  ${greenplus} Keyboard is currently set to: $(cat /etc/default/keyboard | grep XKBLAYOUT | cut -d "\"" -f2)";;
-#      l|L) ;;
-#      m|M) ;;
-      n|N) fix_all;;
-      o|O) hacking_api_prereq;;
-      p|P) fix_linwinpeas;; 
-#      q|Q) ;;
-#      r|R) ;;
-      s|S) ;; # new_kali_signingkey executed
-      t|T) fix_timezone;;
-      u|U) fix_netexec;;
-      v|V) install_vscode;;
-#      w|W) ;;
-      x|X) echo -e "\n\n Exiting pimpmykali.sh - Happy Hacking! \n";;
-      y|Y) iot_course_setup;;
-      z|Z) csharp_course_setup;;
-      "!") install_pip2; install_pip3; fix_pip2_pip3; fix_sead_warning;;
-      "=") get_mirrorlist; best_ping; small_speedtest; large_speedtest; gen_new_sources; cleanup;;
-      "^") SPEEDRUN=1; ENABLE_ROOT=1; install_everything;;
-      "@") install_nessus;;
-      "$") remove_nessus;;
-      "%") fix_cme;;
-        *) pimpmykali_menu;;
-    esac
+    for menuinput in "${selections[@]}"; do
+        echo -e "\n  ${greenplus} Executing Item: $menuinput"
+        case $menuinput in
+            1) SPEEDRUN=0; ENABLE_ROOT=0; fix_missing;;
+            2) fix_smbconf;;
+            3) install_golang; fix_go_path;;
+            4) fix_grub;;
+            5) fix_impacket;;
+            6) SPEEDRUN=0; ENABLE_ROOT=1; make_rootgreatagain;;
+            7) fix_dockercompose;;
+            8) fix_nmap;;
+            9) fix_libwacom; only_upgrade;;
+            0) SPEEDRUN=0; ENABLE_ROOT=0; fix_all;;
+          a|A) mapt_prereq;;
+          b|B) pbb_lab_setup;;
+    #      c|C) ;;
+    #      d|D) ;;
+          e|E) fix_libwacom; peh_weblab_setup;;
+    #      f|F) ;;
+    #      g|G) ;;
+    #      h|H) ;;
+    #      i|I) ;;
+    #      j|J) ;;
+          k|K) fix_keyboard; echo -e "\n  ${greenplus} Keyboard is currently set to: $(cat /etc/default/keyboard | grep XKBLAYOUT | cut -d "\"" -f2)";;
+    #      l|L) ;;
+    #      m|M) ;;
+          n|N) fix_all;;
+          o|O) hacking_api_prereq;;
+          p|P) fix_linwinpeas;; 
+    #      q|Q) ;;
+    #      r|R) ;;
+          s|S) ;; # new_kali_signingkey executed
+          t|T) fix_timezone;;
+          u|U) fix_netexec;;
+          v|V) install_vscode;;
+          w|W) install_pdtm;;
+          x|X) echo -e "\n\n Exiting pimpmykali.sh - Happy Hacking! \n";;
+          y|Y) iot_course_setup;;
+          z|Z) csharp_course_setup;;
+          "!") install_pip2; install_pip3; fix_pip2_pip3; fix_sead_warning;;
+          "=") get_mirrorlist; best_ping; small_speedtest; large_speedtest; gen_new_sources; cleanup;;
+          "^") SPEEDRUN=1; ENABLE_ROOT=1; install_everything;;
+          "@") install_nessus;;
+          "$") remove_nessus;;
+          "%") fix_cme;;
+            *) pimpmykali_menu;;
+        esac
+    done
     }
 
 
@@ -2831,8 +3170,10 @@ pimpmykali_help() {
     "       --nessus  download, install nessus and start nessusd service"
     "   --nukenessus  stop nessusd service and remove nessus"
     "         --peas  get all the peas (linpeas/winpeas)"
+    "         --pdtm  install ProjectDiscovery Tool Manager"
     "    --plumhound  install plumhound"
     "         --root  set speedrun var, enable root login"
+    "      --rustscan  install rustscan"
     "      --smbconf  run fix smb.conf "
     "     --seclists  install seclists"
     "        --spike  run fix spike"
@@ -2901,8 +3242,10 @@ check_arg() {
            --nmap) fix_nmap;;
         --netexec) fix_netexec;;
            --peas) fix_linwinpeas;;
+           --pdtm) install_pdtm;;
       --plumhound) install_plumhound;;
            --root) SPEEDRUN=1; ENABLE_ROOT=1 make_rootgreatagain;;
+       --rustscan) install_rustscan;;
         --smbconf) fix_smbconf;;
        --seclists) fix_seclists;;
         --sublime) install_sublime;;

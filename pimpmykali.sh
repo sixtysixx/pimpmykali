@@ -1595,7 +1595,7 @@ install_nessus() {
     # check if nessus is already installed and build out a remove function
     if [ $arch == "amd64" ]
       then
-      nessus_amd64_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1}.[0-9]{1}-debian10_amd64.deb" | grep -m1 -i ".deb")
+      nessus_amd64_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}-debian10_amd64.deb" | grep -m1 -i ".deb")
       nessus_amd64="https://www.tenable.com/downloads/api/v2/pages/nessus/files/$nessus_amd64_file"
      
       echo -e "\n  ${greenplus} Downloading Nessus for $arch"
@@ -1608,7 +1608,7 @@ install_nessus() {
       check_nessusd_active
     elif [ $arch == "arm64" ]
      then
-      nessus_arm64_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1}.[0-9]{1}-ubuntu[0-9]{1,4}_aarch64.deb" | grep -m1 -i ".deb")
+      nessus_arm64_file=$(curl https://www.tenable.com/downloads/nessus\?loginAttempted\=true | grep -o -m1 -E "Nessus-[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2}-ubuntu[0-9]{1,4}_aarch64.deb" | grep -m1 -i ".deb")
       nessus_arm64="https://www.tenable.com/downloads/api/v2/pages/nessus/files/$nessus_arm64_file"
       
       echo -e "\n  ${greenplus} Downloading Nessus for $arch"
@@ -1833,10 +1833,10 @@ install_vscode() {
 
     is_installed "wget gpg apt_transport_https"
 
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/packages.microsoft.gpg
-    sudo install -D -o root -g root -m 644 /tmp/packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-    rm -f /tmp/packages.microsoft.gpg
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
+	echo "Types: deb\nURIs: https://packages.microsoft.com/repos/code\nSuites: stable\nComponents: main\nArchitectures: amd64,arm64,armhf\nSigned-By: /usr/share/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/vscode.sources > /dev/null
+    rm -f microsoft.gpg
     #required-apt-update
     apt_update
     is_installed code

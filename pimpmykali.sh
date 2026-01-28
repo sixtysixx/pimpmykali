@@ -460,11 +460,11 @@ fix_nxc_symlinks() {
     localbin_path="$HOME/.local/bin/"
 
     nxc_symlink_array=( 'netexec' 'NetExec' 'nxc' 'nxcdb' )
-    for nxc_symlink_array_file in ${cme_symlink_array[@]}; do
-      echo $cme_symlink_array_file > /tmp/nxcsymlink.tmp
-      # sanity check 
+    for nxc_symlink_array_file in ${nxc_symlink_array[@]}; do
+      echo $nxc_symlink_array_file > /tmp/nxcsymlink.tmp
+      # sanity check
       # runuser $findrealuser $getshell -c 'echo -e "\n $HOME/.local/share/pipx/venvs/crackmapexec/bin/$(cat /tmp/cmesymlink.tmp) $HOME/.local/bin/$(cat /tmp/cmesymlink.tmp)"'
-      echo -e "${spaces}${greenplus} Creating symlink for user $findrealuser to ~/.local/bin/$nxc_symlink_array_file  " 
+      echo -e "${spaces}${greenplus} Creating symlink for user $findrealuser to ~/.local/bin/$nxc_symlink_array_file  "
       runuser $findrealuser $getshell -c 'symlink_file=$(cat /tmp/nxcsymlink.tmp); ln -sf $HOME/.local/share/pipx/venvs/netexec/bin/$symlink_file $HOME/.local/bin/$symlink_file'
     done
 
